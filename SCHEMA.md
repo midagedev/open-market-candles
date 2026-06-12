@@ -2,6 +2,12 @@
 
 The generated schema is intentionally small and stable.
 
+Live manifest:
+
+```text
+https://midagedev.github.io/open-market-candles/manifest.json
+```
+
 ## manifest.json
 
 ```json
@@ -16,6 +22,7 @@ The generated schema is intentionally small and stable.
       "successCount": 10,
       "errorCount": 0,
       "symbols": "symbols/us.json",
+      "symbolsGzip": "symbols/us.json.gz",
       "bundle": "candles/1h/us/latest.json",
       "bundleGzip": "candles/1h/us/latest.json.gz"
     }
@@ -69,9 +76,21 @@ The generated schema is intentionally small and stable.
 }
 ```
 
+## Error Object
+
+```json
+{
+  "symbol": "AAPL",
+  "message": "request failed after retries: HTTP Error 429: Too Many Requests",
+  "failedAt": "2026-06-13T00:00:00Z"
+}
+```
+
 ## Notes
 
 - Times are UTC ISO-8601 strings.
 - Prices are numbers.
 - Volume is an integer when available, otherwise `0`.
 - Client apps should treat missing symbols and stale bundles as normal network-data conditions.
+- Clients should fetch `manifest.json` first, then follow relative paths from the manifest.
+- `schemaVersion` changes when a breaking schema change is introduced.

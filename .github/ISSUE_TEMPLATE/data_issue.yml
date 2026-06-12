@@ -1,0 +1,39 @@
+name: Data issue
+description: Report stale, missing, or incorrect generated market data.
+title: "Data issue: "
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not include paid-provider responses, API keys, user portfolios, or copyrighted article text.
+  - type: input
+    id: endpoint
+    attributes:
+      label: Endpoint
+      description: Paste the public URL or relative path.
+      placeholder: https://midagedev.github.io/open-market-candles/manifest.json
+    validations:
+      required: true
+  - type: input
+    id: generated_at
+    attributes:
+      label: generatedAt
+      description: Value from manifest.json or the affected bundle.
+      placeholder: "2026-06-13T00:00:00Z"
+    validations:
+      required: false
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What looks wrong or stale?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to see?
+    validations:
+      required: false

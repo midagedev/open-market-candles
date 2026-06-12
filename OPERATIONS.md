@@ -1,20 +1,35 @@
 # Operations
 
+Production repository:
+
+- Repository: https://github.com/midagedev/open-market-candles
+- Static site: https://midagedev.github.io/open-market-candles/
+- Manifest: https://midagedev.github.io/open-market-candles/manifest.json
+- Workflow: https://github.com/midagedev/open-market-candles/actions/workflows/publish-data.yml
+
 ## Repository Setup
 
 1. Create a public GitHub repository.
 2. Push `main`.
-3. Enable GitHub Pages from the `gh-pages` branch root, or run:
+3. Run the publish workflow once so the `gh-pages` branch exists.
+4. Enable GitHub Pages from the `gh-pages` branch root.
+
+Using the GitHub CLI:
 
 ```bash
 gh api \
   --method POST \
   -H "Accept: application/vnd.github+json" \
-  /repos/<owner>/open-market-candles/pages \
-  -f source='{"branch":"gh-pages","path":"/"}'
+  /repos/<owner>/<repo>/pages \
+  -f source[branch]=gh-pages \
+  -f source[path]=/
 ```
 
-If Pages already exists, use `PUT` instead of `POST`.
+Verify:
+
+```bash
+gh api /repos/<owner>/<repo>/pages
+```
 
 ## Scheduled Publishing
 
@@ -38,6 +53,19 @@ scripts/publish_gh_pages.sh public
 ```
 
 The publish script uses the current `origin` remote.
+
+## Repository Metadata
+
+For a public repository, set the homepage to the Pages URL:
+
+```bash
+gh repo edit <owner>/<repo> \
+  --homepage https://<owner>.github.io/<repo>/ \
+  --add-topic market-data \
+  --add-topic stocks \
+  --add-topic ohlcv \
+  --add-topic github-actions
+```
 
 ## Failure Policy
 

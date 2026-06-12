@@ -1,74 +1,165 @@
 # open-market-candles
 
-Static hourly OHLCV bundles for a small KR/US stock universe.
+[![Publish static market data](https://github.com/midagedev/open-market-candles/actions/workflows/publish-data.yml/badge.svg)](https://github.com/midagedev/open-market-candles/actions/workflows/publish-data.yml)
+[![GitHub Pages](https://img.shields.io/badge/data-GitHub%20Pages-blue)](https://midagedev.github.io/open-market-candles/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-This repository is designed as a simple public data-publishing pipeline:
+Static hourly OHLCV bundles for a small US/KR stock universe, published as plain JSON files on GitHub Pages.
 
-- GitHub Actions collects market candles on a schedule.
-- Generated JSON files are published to GitHub Pages.
-- Client apps can download broad market bundles instead of per-symbol files, which avoids exposing a user's exact watchlist through request logs.
-- No account system, analytics SDK, app telemetry, or user portfolio data is involved.
+- Repository: https://github.com/midagedev/open-market-candles
+- Static data site: https://midagedev.github.io/open-market-candles/
+- Manifest: https://midagedev.github.io/open-market-candles/manifest.json
+- Latest all-market gzip bundle: https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz
 
-> Important: the default collector uses Yahoo Finance chart responses because they are available without API keys and cover both US and Korean symbols. This is an unofficial source. Review provider terms before treating generated data as openly licensed or production-grade.
+This project is intentionally simple: a scheduled GitHub Actions workflow collects candles, validates the generated files, and force-publishes the current static dataset to the `gh-pages` branch.
 
-## Published Files
+> Source notice: the default collector uses unofficial Yahoo Finance chart responses because they are available without API keys and cover both US and Korean symbols. Review upstream provider and exchange terms before treating generated data as openly redistributable or production-grade. See [DATA_NOTICE.md](DATA_NOTICE.md).
 
-When GitHub Pages is enabled, the public URL shape is:
+## What This Is
+
+- A reference pipeline for publishing small market-data bundles as static files.
+- A privacy-friendly data shape for client apps that should not reveal a user's watchlist through per-symbol requests.
+- A forkable template for people who want to run the same pipeline with their own symbol universe or licensed provider.
+
+## What This Is Not
+
+- A licensed market data vendor.
+- A guaranteed real-time feed.
+- Investment advice.
+- A place to republish full news articles or copyrighted research.
+
+## Live Endpoints
+
+| File | URL |
+| --- | --- |
+| Manifest | `https://midagedev.github.io/open-market-candles/manifest.json` |
+| All symbols | `https://midagedev.github.io/open-market-candles/symbols/all.json` |
+| US symbols | `https://midagedev.github.io/open-market-candles/symbols/us.json` |
+| KR symbols | `https://midagedev.github.io/open-market-candles/symbols/kr.json` |
+| All 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json` |
+| US 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/us/latest.json` |
+| KR 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/kr/latest.json` |
+
+Every JSON file is also published with a `.gz` file next to it. For app clients, prefer the gzip bundle:
 
 ```text
-https://<owner>.github.io/open-market-candles/manifest.json
-https://<owner>.github.io/open-market-candles/symbols/us.json
-https://<owner>.github.io/open-market-candles/symbols/kr.json
-https://<owner>.github.io/open-market-candles/candles/1h/us/latest.json
-https://<owner>.github.io/open-market-candles/candles/1h/kr/latest.json
-https://<owner>.github.io/open-market-candles/candles/1h/all/latest.json
+https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz
 ```
 
-Gzip variants are generated next to the JSON files:
+## Quick Start
 
-```text
-*.json.gz
+Fetch the manifest:
+
+```bash
+curl -L https://midagedev.github.io/open-market-candles/manifest.json
 ```
 
-## Local Run
+Fetch and inspect the all-market gzip bundle:
+
+```bash
+curl -L https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz \
+  | gzip -dc \
+  | python3 -m json.tool
+```
+
+Read the latest status with Python:
+
+```bash
+python3 - <<'PY'
+import json
+import urllib.request
+
+url = "https://midagedev.github.io/open-market-candles/manifest.json"
+with urllib.request.urlopen(url, timeout=20) as response:
+    manifest = json.load(response)
+
+print(manifest["generatedAt"])
+for market, info in manifest["markets"].items():
+    print(market, info["successCount"], "ok,", info["errorCount"], "errors")
+PY
+```
+
+## Current Universe
+
+The starter universe is deliberately small to keep GitHub Pages bandwidth, workflow time, and provider pressure low.
+
+| Market | Symbols |
+| --- | --- |
+| US | AAPL, MSFT, GOOGL, AMZN, META, NVDA, TSLA, BRK-B, JPM, V |
+| KR | 005930, 000660, 035420, 035720, 005380, 000270, 051910, 006400, 068270, 207940 |
+
+Edit [config/universe.json](config/universe.json) to change markets, symbols, interval, range, or provider metadata.
+
+## Freshness
+
+- Default interval: `1h`
+- Default range: `1mo`
+- Schedule: once per hour at minute 17 UTC
+- Workflow: [Publish static market data](https://github.com/midagedev/open-market-candles/actions/workflows/publish-data.yml)
+
+GitHub scheduled workflows can be delayed or skipped during heavy load. Client apps should always read `manifest.generatedAt` and tolerate stale or partial data.
+
+## Local Development
+
+No third-party Python packages are required.
 
 ```bash
 python3 scripts/collect_market_data.py --output public
 python3 scripts/validate_dataset.py public
-```
-
-Open the generated static site:
-
-```bash
 python3 -m http.server 8000 --directory public
 ```
 
-## Configuration
+Then open:
 
-Edit [config/universe.json](config/universe.json) to change:
+```text
+http://localhost:8000/manifest.json
+```
 
-- markets
-- symbols
-- default interval
-- default range
-- provider metadata
+## Fork And Operate
 
-The default schedule in [.github/workflows/publish-data.yml](.github/workflows/publish-data.yml) runs once per hour at minute 17 UTC. GitHub can delay or skip scheduled workflows during heavy load, so client apps should always read `manifest.generatedAt` and tolerate stale data.
+1. Fork this repository.
+2. Edit [config/universe.json](config/universe.json).
+3. Enable GitHub Actions on the fork.
+4. Run the `Publish static market data` workflow manually once.
+5. Enable GitHub Pages from the `gh-pages` branch root.
+6. Point your app at `https://<owner>.github.io/<repo>/manifest.json`.
 
-## Data Shape
+The workflow publishes generated files to `gh-pages` and keeps generated data out of the `main` branch history.
 
-See [SCHEMA.md](SCHEMA.md).
+## Privacy Model
 
-## Legal And Source Notice
-
-See [DATA_NOTICE.md](DATA_NOTICE.md). Code is MIT licensed. Generated market data may be subject to upstream provider terms and exchange rules.
-
-## Privacy Model For Client Apps
-
-For privacy-sensitive apps, download a broad bundle such as:
+For privacy-sensitive clients, download a broad bundle such as:
 
 ```text
 candles/1h/all/latest.json.gz
 ```
 
-Avoid requesting one file per symbol from a server you do not control. Even without app accounts, per-symbol network requests can reveal user interest through CDN or server logs.
+Avoid one request per watched symbol. Even without accounts or analytics, per-symbol requests can reveal user interests through server, CDN, or proxy logs.
+
+## Schema
+
+See [SCHEMA.md](SCHEMA.md). The short version:
+
+- `manifest.json` tells clients which bundles exist and when they were generated.
+- `symbols/*.json` lists configured symbols by market.
+- `candles/1h/*/latest.json` contains symbol metadata and OHLCV candles.
+- `errors` records per-symbol collection failures without failing the whole bundle.
+
+## Limitations
+
+- The default provider is unofficial and may rate-limit, change, or stop responding.
+- Market data may be delayed, adjusted, incomplete, or subject to redistribution restrictions.
+- The pipeline does not currently publish corporate actions, fundamentals, filings, or news.
+- The generated data is not covered by the MIT license for this repository's code.
+
+## Contributing
+
+Issues and pull requests are welcome, especially for:
+
+- safer licensed providers
+- clearer schema evolution
+- better validation
+- small, well-explained universe changes
+- official disclosure/event metadata
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing provider or dataset changes.
