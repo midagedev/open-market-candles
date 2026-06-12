@@ -22,6 +22,15 @@ If you need a legally clean public dataset, replace the default provider with a 
 
 Do not submit paid-provider data, credentials, private API responses, or copyrighted market datasets in issues or pull requests.
 
+## Official Disclosure Metadata
+
+Disclosure bundles contain metadata and links, not full filing documents.
+
+- US disclosure metadata is collected from official SEC EDGAR JSON APIs.
+- Korean disclosure metadata is collected from the official OpenDART disclosure search API when `OPENDART_API_KEY` is configured.
+
+OpenDART API keys, paid data, and private provider responses must not be committed to the repository.
+
 ## News And Articles
 
 This repository intentionally does not republish full news articles. News content is copyright-sensitive. A future events pipeline should prefer:

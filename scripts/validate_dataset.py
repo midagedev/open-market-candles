@@ -74,6 +74,40 @@ def validate_bundle(path: Path, min_success: int, errors: list[str]) -> None:
             require(isinstance(candle.get("volume"), int), f"{label}: volume must be int", errors)
 
 
+def validate_disclosure_bundle(path: Path, errors: list[str]) -> None:
+    require(path.exists(), f"missing disclosure bundle: {path}", errors)
+    require(path.with_suffix(path.suffix + ".gz").exists(), f"missing disclosure gzip bundle: {path}.gz", errors)
+    if not path.exists():
+        return
+
+    bundle = load_json(path)
+    gzip_bundle = load_gzip_json(path.with_suffix(path.suffix + ".gz"))
+    require(bundle == gzip_bundle, f"disclosure gzip mismatch: {path}", errors)
+    require(bundle.get("schemaVersion") == "open-market-candles.disclosures.v1", f"{path}: bad disclosure schemaVersion", errors)
+    parse_iso(bundle.get("generatedAt"), f"{path}: generatedAt", errors)
+    require(bundle.get("kind") == "disclosures", f"{path}: kind must be disclosures", errors)
+    require(isinstance(bundle.get("events"), list), f"{path}: events must be a list", errors)
+    require(isinstance(bundle.get("errors"), list), f"{path}: errors must be a list", errors)
+    require(isinstance(bundle.get("sources"), list), f"{path}: sources must be a list", errors)
+
+    event_ids: set[str] = set()
+    for index, event in enumerate(bundle.get("events") or []):
+        label = f"{path}: event {index}"
+        event_id = event.get("id")
+        require(isinstance(event_id, str) and bool(event_id), f"{label}: id missing", errors)
+        if isinstance(event_id, str):
+            require(event_id not in event_ids, f"{path}: duplicate event id {event_id}", errors)
+            event_ids.add(event_id)
+        require(isinstance(event.get("market"), str) and bool(event.get("market")), f"{label}: market missing", errors)
+        require(isinstance(event.get("symbol"), str) and bool(event.get("symbol")), f"{label}: symbol missing", errors)
+        require(isinstance(event.get("sourceId"), str) and bool(event.get("sourceId")), f"{label}: sourceId missing", errors)
+        require(isinstance(event.get("title"), str) and bool(event.get("title")), f"{label}: title missing", errors)
+        filed_date = event.get("filedDate")
+        require(isinstance(filed_date, str) and len(filed_date) == 10, f"{label}: filedDate must be YYYY-MM-DD", errors)
+        if event.get("acceptedAt") is not None:
+            parse_iso(event.get("acceptedAt"), f"{label}: acceptedAt", errors)
+
+
 def validate(root: Path, min_success_per_market: int) -> list[str]:
     errors: list[str] = []
     manifest_path = root / "manifest.json"
@@ -103,6 +137,23 @@ def validate(root: Path, min_success_per_market: int) -> list[str]:
     require(isinstance(all_bundle, str), "manifest: all bundle missing", errors)
     if isinstance(all_bundle, str):
         validate_bundle(root / all_bundle, max(1, min_success_per_market), errors)
+
+    disclosures = (manifest.get("events") or {}).get("disclosures")
+    if disclosures is not None:
+        require(disclosures.get("schemaVersion") == "open-market-candles.disclosures.v1", "manifest: bad disclosures schemaVersion", errors)
+        parse_iso(disclosures.get("generatedAt"), "manifest disclosures generatedAt", errors)
+        all_disclosure_bundle = disclosures.get("bundle")
+        require(isinstance(all_disclosure_bundle, str), "manifest: disclosures all bundle missing", errors)
+        if isinstance(all_disclosure_bundle, str):
+            validate_disclosure_bundle(root / all_disclosure_bundle, errors)
+        disclosure_markets = disclosures.get("markets")
+        require(isinstance(disclosure_markets, dict), "manifest: disclosures markets must be an object", errors)
+        if isinstance(disclosure_markets, dict):
+            for market, info in disclosure_markets.items():
+                bundle = info.get("bundle")
+                require(isinstance(bundle, str), f"manifest: disclosures {market} bundle missing", errors)
+                if isinstance(bundle, str):
+                    validate_disclosure_bundle(root / bundle, errors)
 
     require((root / "index.html").exists(), "missing index.html", errors)
     return errors

@@ -5,6 +5,7 @@ Thanks for helping make `open-market-candles` more useful.
 ## Before Opening A Pull Request
 
 - Run `python3 scripts/collect_market_data.py --output public`.
+- Run `python3 scripts/collect_disclosures.py --output public`.
 - Run `python3 scripts/validate_dataset.py public`.
 - Keep generated `public/` files out of the pull request.
 - Keep the starter universe small unless the change includes a clear scaling reason.
@@ -43,4 +44,4 @@ Avoid breaking clients casually. For breaking changes:
 
 ## News And Events
 
-Do not submit full article text. Prefer official filing metadata, source links, and original educational summaries based on official facts.
+Do not submit full article text or full filing bodies. Prefer official filing metadata, source links, and original educational summaries based on official facts.

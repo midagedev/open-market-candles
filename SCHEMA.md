@@ -76,12 +76,66 @@ https://midagedev.github.io/open-market-candles/manifest.json
 }
 ```
 
+## Disclosure Bundle
+
+```json
+{
+  "schemaVersion": "open-market-candles.disclosures.v1",
+  "generatedAt": "2026-06-13T00:00:00Z",
+  "kind": "disclosures",
+  "market": "us",
+  "marketName": "United States",
+  "lookbackDays": 30,
+  "fromDate": "2026-05-14",
+  "toDate": "2026-06-13",
+  "sources": [
+    {
+      "id": "sec-edgar",
+      "name": "SEC EDGAR submissions API",
+      "official": true,
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    }
+  ],
+  "events": [
+    {
+      "id": "sec-0000320193-0000320193-26-000001",
+      "market": "us",
+      "symbol": "AAPL",
+      "displaySymbol": "AAPL",
+      "companyName": "Apple Inc.",
+      "source": "SEC EDGAR",
+      "sourceId": "sec-edgar",
+      "official": true,
+      "type": "10-Q",
+      "title": "10-Q",
+      "filedDate": "2026-06-12",
+      "acceptedAt": "2026-06-12T20:00:00Z",
+      "url": "https://www.sec.gov/Archives/edgar/data/..."
+    }
+  ],
+  "errors": []
+}
+```
+
+Korean OpenDART events use the same outer shape and include DART-specific fields such as `receiptNumber`, `corpCode`, `stockCode`, `filerName`, and `remarks`.
+
 ## Error Object
 
 ```json
 {
   "symbol": "AAPL",
   "message": "request failed after retries: HTTP Error 429: Too Many Requests",
+  "failedAt": "2026-06-13T00:00:00Z"
+}
+```
+
+Disclosure bundles may also include source-level skip errors:
+
+```json
+{
+  "market": "kr",
+  "sourceId": "opendart",
+  "message": "skipped: OPENDART_API_KEY is not configured",
   "failedAt": "2026-06-13T00:00:00Z"
 }
 ```
@@ -94,3 +148,5 @@ https://midagedev.github.io/open-market-candles/manifest.json
 - Client apps should treat missing symbols and stale bundles as normal network-data conditions.
 - Clients should fetch `manifest.json` first, then follow relative paths from the manifest.
 - `schemaVersion` changes when a breaking schema change is introduced.
+- Disclosure event `filedDate` is a `YYYY-MM-DD` date.
+- Disclosure event `acceptedAt` is UTC ISO-8601 when the source provides a timestamp, otherwise `null`.

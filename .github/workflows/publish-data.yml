@@ -27,6 +27,12 @@ jobs:
       - name: Collect market data
         run: python scripts/collect_market_data.py --output public
 
+      - name: Collect disclosure events
+        env:
+          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python scripts/collect_disclosures.py --output public
+
       - name: Validate dataset
         run: python scripts/validate_dataset.py public --min-success-per-market 1
 

@@ -3,6 +3,7 @@
   "defaultProvider": "yahoo-chart",
   "defaultInterval": "1h",
   "defaultRange": "1mo",
+  "defaultDisclosureLookbackDays": 30,
   "providers": {
     "yahoo-chart": {
       "id": "yahoo-chart",
@@ -22,16 +23,16 @@
       "currency": "USD",
       "timezone": "America/New_York",
       "symbols": [
-        {"symbol": "AAPL", "displaySymbol": "AAPL", "name": "Apple Inc.", "exchange": "NASDAQ"},
-        {"symbol": "MSFT", "displaySymbol": "MSFT", "name": "Microsoft Corporation", "exchange": "NASDAQ"},
-        {"symbol": "GOOGL", "displaySymbol": "GOOGL", "name": "Alphabet Inc.", "exchange": "NASDAQ"},
-        {"symbol": "AMZN", "displaySymbol": "AMZN", "name": "Amazon.com, Inc.", "exchange": "NASDAQ"},
-        {"symbol": "META", "displaySymbol": "META", "name": "Meta Platforms, Inc.", "exchange": "NASDAQ"},
-        {"symbol": "NVDA", "displaySymbol": "NVDA", "name": "NVIDIA Corporation", "exchange": "NASDAQ"},
-        {"symbol": "TSLA", "displaySymbol": "TSLA", "name": "Tesla, Inc.", "exchange": "NASDAQ"},
-        {"symbol": "BRK-B", "displaySymbol": "BRK.B", "name": "Berkshire Hathaway Inc.", "exchange": "NYSE"},
-        {"symbol": "JPM", "displaySymbol": "JPM", "name": "JPMorgan Chase & Co.", "exchange": "NYSE"},
-        {"symbol": "V", "displaySymbol": "V", "name": "Visa Inc.", "exchange": "NYSE"}
+        {"symbol": "AAPL", "displaySymbol": "AAPL", "name": "Apple Inc.", "exchange": "NASDAQ", "secCik": "0000320193"},
+        {"symbol": "MSFT", "displaySymbol": "MSFT", "name": "Microsoft Corporation", "exchange": "NASDAQ", "secCik": "0000789019"},
+        {"symbol": "GOOGL", "displaySymbol": "GOOGL", "name": "Alphabet Inc.", "exchange": "NASDAQ", "secCik": "0001652044"},
+        {"symbol": "AMZN", "displaySymbol": "AMZN", "name": "Amazon.com, Inc.", "exchange": "NASDAQ", "secCik": "0001018724"},
+        {"symbol": "META", "displaySymbol": "META", "name": "Meta Platforms, Inc.", "exchange": "NASDAQ", "secCik": "0001326801"},
+        {"symbol": "NVDA", "displaySymbol": "NVDA", "name": "NVIDIA Corporation", "exchange": "NASDAQ", "secCik": "0001045810"},
+        {"symbol": "TSLA", "displaySymbol": "TSLA", "name": "Tesla, Inc.", "exchange": "NASDAQ", "secCik": "0001318605"},
+        {"symbol": "BRK-B", "displaySymbol": "BRK.B", "name": "Berkshire Hathaway Inc.", "exchange": "NYSE", "secCik": "0001067983"},
+        {"symbol": "JPM", "displaySymbol": "JPM", "name": "JPMorgan Chase & Co.", "exchange": "NYSE", "secCik": "0000019617"},
+        {"symbol": "V", "displaySymbol": "V", "name": "Visa Inc.", "exchange": "NYSE", "secCik": "0001403161"}
       ]
     },
     {

@@ -4,20 +4,22 @@
 [![GitHub Pages](https://img.shields.io/badge/data-GitHub%20Pages-blue)](https://midagedev.github.io/open-market-candles/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Static hourly OHLCV bundles for a small US/KR stock universe, published as plain JSON files on GitHub Pages.
+Static hourly OHLCV bundles and official disclosure-event metadata for a small US/KR stock universe, published as plain JSON files on GitHub Pages.
 
 - Repository: https://github.com/midagedev/open-market-candles
 - Static data site: https://midagedev.github.io/open-market-candles/
 - Manifest: https://midagedev.github.io/open-market-candles/manifest.json
 - Latest all-market gzip bundle: https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz
+- Latest disclosure gzip bundle: https://midagedev.github.io/open-market-candles/events/disclosures/all/latest.json.gz
 
-This project is intentionally simple: a scheduled GitHub Actions workflow collects candles, validates the generated files, and force-publishes the current static dataset to the `gh-pages` branch.
+This project is intentionally simple: a scheduled GitHub Actions workflow collects candles and official disclosure metadata, validates the generated files, and force-publishes the current static dataset to the `gh-pages` branch.
 
 > Source notice: the default collector uses unofficial Yahoo Finance chart responses because they are available without API keys and cover both US and Korean symbols. Review upstream provider and exchange terms before treating generated data as openly redistributable or production-grade. See [DATA_NOTICE.md](DATA_NOTICE.md).
 
 ## What This Is
 
 - A reference pipeline for publishing small market-data bundles as static files.
+- A reference pipeline for publishing official disclosure-event metadata without republishing full filing documents.
 - A privacy-friendly data shape for client apps that should not reveal a user's watchlist through per-symbol requests.
 - A forkable template for people who want to run the same pipeline with their own symbol universe or licensed provider.
 
@@ -39,11 +41,20 @@ This project is intentionally simple: a scheduled GitHub Actions workflow collec
 | All 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json` |
 | US 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/us/latest.json` |
 | KR 1h candles | `https://midagedev.github.io/open-market-candles/candles/1h/kr/latest.json` |
+| All disclosures | `https://midagedev.github.io/open-market-candles/events/disclosures/all/latest.json` |
+| US disclosures | `https://midagedev.github.io/open-market-candles/events/disclosures/us/latest.json` |
+| KR disclosures | `https://midagedev.github.io/open-market-candles/events/disclosures/kr/latest.json` |
 
 Every JSON file is also published with a `.gz` file next to it. For app clients, prefer the gzip bundle:
 
 ```text
 https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz
+```
+
+Disclosure events are also available as gzip:
+
+```text
+https://midagedev.github.io/open-market-candles/events/disclosures/all/latest.json.gz
 ```
 
 ## Quick Start
@@ -58,6 +69,14 @@ Fetch and inspect the all-market gzip bundle:
 
 ```bash
 curl -L https://midagedev.github.io/open-market-candles/candles/1h/all/latest.json.gz \
+  | gzip -dc \
+  | python3 -m json.tool
+```
+
+Fetch and inspect disclosure events:
+
+```bash
+curl -L https://midagedev.github.io/open-market-candles/events/disclosures/all/latest.json.gz \
   | gzip -dc \
   | python3 -m json.tool
 ```
@@ -94,6 +113,7 @@ Edit [config/universe.json](config/universe.json) to change markets, symbols, in
 
 - Default interval: `1h`
 - Default range: `1mo`
+- Default disclosure lookback: `30` days
 - Schedule: once per hour at minute 17 UTC
 - Workflow: [Publish static market data](https://github.com/midagedev/open-market-candles/actions/workflows/publish-data.yml)
 
@@ -105,6 +125,7 @@ No third-party Python packages are required.
 
 ```bash
 python3 scripts/collect_market_data.py --output public
+python3 scripts/collect_disclosures.py --output public
 python3 scripts/validate_dataset.py public
 python3 -m http.server 8000 --directory public
 ```
@@ -120,9 +141,11 @@ http://localhost:8000/manifest.json
 1. Fork this repository.
 2. Edit [config/universe.json](config/universe.json).
 3. Enable GitHub Actions on the fork.
-4. Run the `Publish static market data` workflow manually once.
-5. Enable GitHub Pages from the `gh-pages` branch root.
-6. Point your app at `https://<owner>.github.io/<repo>/manifest.json`.
+4. Add `OPENDART_API_KEY` as a repository secret if you want Korean disclosure metadata.
+5. Optionally add `SEC_USER_AGENT` as a repository variable for SEC EDGAR access.
+6. Run the `Publish static market data` workflow manually once.
+7. Enable GitHub Pages from the `gh-pages` branch root.
+8. Point your app at `https://<owner>.github.io/<repo>/manifest.json`.
 
 The workflow publishes generated files to `gh-pages` and keeps generated data out of the `main` branch history.
 
@@ -143,13 +166,16 @@ See [SCHEMA.md](SCHEMA.md). The short version:
 - `manifest.json` tells clients which bundles exist and when they were generated.
 - `symbols/*.json` lists configured symbols by market.
 - `candles/1h/*/latest.json` contains symbol metadata and OHLCV candles.
+- `events/disclosures/*/latest.json` contains official filing/disclosure metadata and links.
 - `errors` records per-symbol collection failures without failing the whole bundle.
 
 ## Limitations
 
 - The default provider is unofficial and may rate-limit, change, or stop responding.
+- US disclosures use official SEC EDGAR metadata. SEC asks automated clients to declare a User-Agent and follow fair-access limits.
+- Korean disclosures require an OpenDART API key. Without `OPENDART_API_KEY`, the KR disclosure bundle is generated with a skip error.
 - Market data may be delayed, adjusted, incomplete, or subject to redistribution restrictions.
-- The pipeline does not currently publish corporate actions, fundamentals, filings, or news.
+- The pipeline does not currently publish full filing documents, corporate actions, fundamentals, or news articles.
 - The generated data is not covered by the MIT license for this repository's code.
 
 ## Contributing
