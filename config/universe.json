@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "defaultProvider": "yahoo-chart",
+  "defaultInterval": "1h",
+  "defaultRange": "1mo",
+  "providers": {
+    "yahoo-chart": {
+      "id": "yahoo-chart",
+      "name": "Yahoo Finance chart",
+      "official": false,
+      "baseUrls": [
+        "https://query1.finance.yahoo.com/v8/finance/chart",
+        "https://query2.finance.yahoo.com/v8/finance/chart"
+      ],
+      "notice": "Unofficial Yahoo Finance chart responses. Review source and exchange terms before redistribution."
+    }
+  },
+  "markets": [
+    {
+      "id": "us",
+      "name": "United States",
+      "currency": "USD",
+      "timezone": "America/New_York",
+      "symbols": [
+        {"symbol": "AAPL", "displaySymbol": "AAPL", "name": "Apple Inc.", "exchange": "NASDAQ"},
+        {"symbol": "MSFT", "displaySymbol": "MSFT", "name": "Microsoft Corporation", "exchange": "NASDAQ"},
+        {"symbol": "GOOGL", "displaySymbol": "GOOGL", "name": "Alphabet Inc.", "exchange": "NASDAQ"},
+        {"symbol": "AMZN", "displaySymbol": "AMZN", "name": "Amazon.com, Inc.", "exchange": "NASDAQ"},
+        {"symbol": "META", "displaySymbol": "META", "name": "Meta Platforms, Inc.", "exchange": "NASDAQ"},
+        {"symbol": "NVDA", "displaySymbol": "NVDA", "name": "NVIDIA Corporation", "exchange": "NASDAQ"},
+        {"symbol": "TSLA", "displaySymbol": "TSLA", "name": "Tesla, Inc.", "exchange": "NASDAQ"},
+        {"symbol": "BRK-B", "displaySymbol": "BRK.B", "name": "Berkshire Hathaway Inc.", "exchange": "NYSE"},
+        {"symbol": "JPM", "displaySymbol": "JPM", "name": "JPMorgan Chase & Co.", "exchange": "NYSE"},
+        {"symbol": "V", "displaySymbol": "V", "name": "Visa Inc.", "exchange": "NYSE"}
+      ]
+    },
+    {
+      "id": "kr",
+      "name": "Korea",
+      "currency": "KRW",
+      "timezone": "Asia/Seoul",
+      "symbols": [
+        {"symbol": "005930.KS", "displaySymbol": "005930", "name": "Samsung Electronics Co., Ltd.", "exchange": "KOSPI"},
+        {"symbol": "000660.KS", "displaySymbol": "000660", "name": "SK hynix Inc.", "exchange": "KOSPI"},
+        {"symbol": "035420.KS", "displaySymbol": "035420", "name": "NAVER Corporation", "exchange": "KOSPI"},
+        {"symbol": "035720.KS", "displaySymbol": "035720", "name": "Kakao Corp.", "exchange": "KOSPI"},
+        {"symbol": "005380.KS", "displaySymbol": "005380", "name": "Hyundai Motor Company", "exchange": "KOSPI"},
+        {"symbol": "000270.KS", "displaySymbol": "000270", "name": "Kia Corporation", "exchange": "KOSPI"},
+        {"symbol": "051910.KS", "displaySymbol": "051910", "name": "LG Chem, Ltd.", "exchange": "KOSPI"},
+        {"symbol": "006400.KS", "displaySymbol": "006400", "name": "Samsung SDI Co., Ltd.", "exchange": "KOSPI"},
+        {"symbol": "068270.KS", "displaySymbol": "068270", "name": "Celltrion, Inc.", "exchange": "KOSPI"},
+        {"symbol": "207940.KS", "displaySymbol": "207940", "name": "Samsung Biologics Co., Ltd.", "exchange": "KOSPI"}
+      ]
+    }
+  ]
+}
