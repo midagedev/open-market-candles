@@ -1,0 +1,28 @@
+{
+  "errors": [
+    {
+      "failedAt": "2026-09-06T23:54:25Z",
+      "market": "kr",
+      "message": "skipped: OPENDART_API_KEY is not configured",
+      "sourceId": "opendart"
+    }
+  ],
+  "events": [],
+  "fromDate": "2026-08-07",
+  "generatedAt": "2026-09-06T23:54:20Z",
+  "kind": "disclosures",
+  "lookbackDays": 30,
+  "market": "kr",
+  "marketName": "Korea",
+  "schemaVersion": "open-market-candles.disclosures.v1",
+  "sources": [
+    {
+      "id": "opendart",
+      "name": "OpenDART disclosure search API",
+      "official": true,
+      "requiresSecret": "OPENDART_API_KEY",
+      "url": "https://opendart.fss.or.kr/guide/detail.do?apiGrpCd=DS001&apiId=2019001"
+    }
+  ],
+  "toDate": "2026-09-06"
+}

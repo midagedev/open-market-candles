@@ -1,0 +1,70 @@
+{
+  "bundles": {
+    "all": {
+      "bundle": "candles/1h/all/latest.json",
+      "bundleGzip": "candles/1h/all/latest.json.gz",
+      "symbols": "symbols/all.json",
+      "symbolsGzip": "symbols/all.json.gz"
+    }
+  },
+  "dataNotice": "Generated market data may be subject to upstream provider and exchange terms. See DATA_NOTICE.md in the source repository.",
+  "events": {
+    "disclosures": {
+      "bundle": "events/disclosures/all/latest.json",
+      "bundleGzip": "events/disclosures/all/latest.json.gz",
+      "generatedAt": "2026-09-06T23:54:20Z",
+      "markets": {
+        "kr": {
+          "bundle": "events/disclosures/kr/latest.json",
+          "bundleGzip": "events/disclosures/kr/latest.json.gz",
+          "errorCount": 1,
+          "eventCount": 0,
+          "name": "Korea"
+        },
+        "us": {
+          "bundle": "events/disclosures/us/latest.json",
+          "bundleGzip": "events/disclosures/us/latest.json.gz",
+          "errorCount": 0,
+          "eventCount": 2297,
+          "name": "United States"
+        }
+      },
+      "schemaVersion": "open-market-candles.disclosures.v1"
+    }
+  },
+  "generatedAt": "2026-09-06T23:54:09Z",
+  "intervals": [
+    "1h"
+  ],
+  "markets": {
+    "kr": {
+      "bundle": "candles/1h/kr/latest.json",
+      "bundleGzip": "candles/1h/kr/latest.json.gz",
+      "errorCount": 0,
+      "name": "Korea",
+      "successCount": 10,
+      "symbolCount": 10,
+      "symbols": "symbols/kr.json",
+      "symbolsGzip": "symbols/kr.json.gz"
+    },
+    "us": {
+      "bundle": "candles/1h/us/latest.json",
+      "bundleGzip": "candles/1h/us/latest.json.gz",
+      "errorCount": 0,
+      "name": "United States",
+      "successCount": 10,
+      "symbolCount": 10,
+      "symbols": "symbols/us.json",
+      "symbolsGzip": "symbols/us.json.gz"
+    }
+  },
+  "privacyRecommendation": "Download broad market bundles instead of per-symbol files when building privacy-sensitive clients.",
+  "provider": {
+    "id": "yahoo-chart",
+    "name": "Yahoo Finance chart",
+    "notice": "Unofficial Yahoo Finance chart responses. Review source and exchange terms before redistribution.",
+    "official": false
+  },
+  "range": "1mo",
+  "schemaVersion": "open-market-candles.manifest.v1"
+}
