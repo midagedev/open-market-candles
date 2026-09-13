@@ -1,0 +1,87 @@
+{
+  "market": "kr",
+  "name": "Korea",
+  "schemaVersion": "open-market-candles.symbols.v1",
+  "symbols": [
+    {
+      "currency": "KRW",
+      "displaySymbol": "005930",
+      "exchange": "KOSPI",
+      "name": "Samsung Electronics Co., Ltd.",
+      "symbol": "005930.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "000660",
+      "exchange": "KOSPI",
+      "name": "SK hynix Inc.",
+      "symbol": "000660.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "035420",
+      "exchange": "KOSPI",
+      "name": "NAVER Corporation",
+      "symbol": "035420.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "035720",
+      "exchange": "KOSPI",
+      "name": "Kakao Corp.",
+      "symbol": "035720.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "005380",
+      "exchange": "KOSPI",
+      "name": "Hyundai Motor Company",
+      "symbol": "005380.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "000270",
+      "exchange": "KOSPI",
+      "name": "Kia Corporation",
+      "symbol": "000270.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "051910",
+      "exchange": "KOSPI",
+      "name": "LG Chem, Ltd.",
+      "symbol": "051910.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "006400",
+      "exchange": "KOSPI",
+      "name": "Samsung SDI Co., Ltd.",
+      "symbol": "006400.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "068270",
+      "exchange": "KOSPI",
+      "name": "Celltrion, Inc.",
+      "symbol": "068270.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "207940",
+      "exchange": "KOSPI",
+      "name": "Samsung Biologics Co., Ltd.",
+      "symbol": "207940.KS",
+      "timezone": "Asia/Seoul"
+    }
+  ]
+}

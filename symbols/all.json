@@ -1,0 +1,167 @@
+{
+  "market": "all",
+  "name": "All markets",
+  "schemaVersion": "open-market-candles.symbols.v1",
+  "symbols": [
+    {
+      "currency": "USD",
+      "displaySymbol": "AAPL",
+      "exchange": "NASDAQ",
+      "name": "Apple Inc.",
+      "symbol": "AAPL",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "MSFT",
+      "exchange": "NASDAQ",
+      "name": "Microsoft Corporation",
+      "symbol": "MSFT",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "GOOGL",
+      "exchange": "NASDAQ",
+      "name": "Alphabet Inc.",
+      "symbol": "GOOGL",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "AMZN",
+      "exchange": "NASDAQ",
+      "name": "Amazon.com, Inc.",
+      "symbol": "AMZN",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "META",
+      "exchange": "NASDAQ",
+      "name": "Meta Platforms, Inc.",
+      "symbol": "META",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "NVDA",
+      "exchange": "NASDAQ",
+      "name": "NVIDIA Corporation",
+      "symbol": "NVDA",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "TSLA",
+      "exchange": "NASDAQ",
+      "name": "Tesla, Inc.",
+      "symbol": "TSLA",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "BRK.B",
+      "exchange": "NYSE",
+      "name": "Berkshire Hathaway Inc.",
+      "symbol": "BRK-B",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "JPM",
+      "exchange": "NYSE",
+      "name": "JPMorgan Chase & Co.",
+      "symbol": "JPM",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "USD",
+      "displaySymbol": "V",
+      "exchange": "NYSE",
+      "name": "Visa Inc.",
+      "symbol": "V",
+      "timezone": "America/New_York"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "005930",
+      "exchange": "KOSPI",
+      "name": "Samsung Electronics Co., Ltd.",
+      "symbol": "005930.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "000660",
+      "exchange": "KOSPI",
+      "name": "SK hynix Inc.",
+      "symbol": "000660.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "035420",
+      "exchange": "KOSPI",
+      "name": "NAVER Corporation",
+      "symbol": "035420.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "035720",
+      "exchange": "KOSPI",
+      "name": "Kakao Corp.",
+      "symbol": "035720.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "005380",
+      "exchange": "KOSPI",
+      "name": "Hyundai Motor Company",
+      "symbol": "005380.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "000270",
+      "exchange": "KOSPI",
+      "name": "Kia Corporation",
+      "symbol": "000270.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "051910",
+      "exchange": "KOSPI",
+      "name": "LG Chem, Ltd.",
+      "symbol": "051910.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "006400",
+      "exchange": "KOSPI",
+      "name": "Samsung SDI Co., Ltd.",
+      "symbol": "006400.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "068270",
+      "exchange": "KOSPI",
+      "name": "Celltrion, Inc.",
+      "symbol": "068270.KS",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "currency": "KRW",
+      "displaySymbol": "207940",
+      "exchange": "KOSPI",
+      "name": "Samsung Biologics Co., Ltd.",
+      "symbol": "207940.KS",
+      "timezone": "Asia/Seoul"
+    }
+  ]
+}
